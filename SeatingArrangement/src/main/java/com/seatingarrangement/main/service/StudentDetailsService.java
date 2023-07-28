@@ -21,34 +21,43 @@ public class StudentDetailsService {
 	
 	private Courses course;
 	
-//	public StudentDetails insert(StudentDetails studentDetails) {
-//		if(studentDetails!=null) {
-//			
-//			Courses c = courseService.getByCourse(studentDetails.getBranch());
-//			c.setNo_of_seats_alloted(c.getNo_of_seats_alloted()+1);
-//			c.setNo_of_seats_available(c.getNo_of_seats_available()-1);
-//		
-//			return studentDetailsRepository.save(studentDetails);
-//        }
-//        return null;
-//    }
+
 	
 	 public StudentDetails insert(StudentDetails studentDetails) {
 	        if (studentDetails != null) {
-	            Courses c = courseService.getByCourse(studentDetails.getBranch());
-	            
-	            // Check if there are available seats in the branch
-	            if (c.getNo_of_seats_available() > 0) {
-	                c.setNo_of_seats_alloted(c.getNo_of_seats_alloted() + 1);
-	                c.setNo_of_seats_available(c.getNo_of_seats_available() - 1);
-	                
-	                // Save the updated course details with the new seat allocation
-	                courseService.saveCourse(c);
-	                
-	                return studentDetailsRepository.save(studentDetails);
+	            int marks = studentDetails.getMarks();
+	            String branch = null;
+
+	            if (marks > 950 && marks <= 1000) {
+	                branch = "CSE";
+	            } else if (marks > 900 && marks <= 950) {
+	                branch = "ECE";
+	            } else if (marks > 900 && marks <= 850) {
+	                branch = "MECH";
+	            } else if (marks > 850 && marks <= 800) {
+	                branch = "CIVIL";
+	            }
+
+	            if (branch != null ) {
+	                Courses course = courseService.getByCourse(branch);
+
+	                // Check if there are available seats in the branch
+	                if (course.getNo_of_seats_available() > 0) {
+	                    course.setNo_of_seats_alloted(course.getNo_of_seats_alloted() + 1);
+	                    course.setNo_of_seats_available(course.getNo_of_seats_available() - 1);
+
+	                    // Save the updated course details with the new seat allocation
+	                    courseService.saveCourse(course);
+
+	                    studentDetails.setBranch(branch);
+	                    return studentDetailsRepository.save(studentDetails);
+	                } else {
+	                    // Branch is full, handle accordingly (throw an exception, return null, etc.)
+	                    throw new IllegalStateException("Branch is full. Cannot add more students.");
+	                }
 	            } else {
-	                // Branch is full, handle accordingly (throw an exception, return null, etc.)
-	                throw new IllegalStateException("Branch is full. Cannot add more students.");
+	                // Student's marks do not fall in any valid range, handle accordingly (throw an exception, return null, etc.)
+	                throw new IllegalArgumentException("Invalid marks. Cannot allocate seat.");
 	            }
 	        }
 	        return null;

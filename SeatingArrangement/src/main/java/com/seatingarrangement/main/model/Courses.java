@@ -13,11 +13,33 @@ public class Courses {
 	private int id;
 	
     private String course;
+    
+    private int total_seats;
 	
 	private int no_of_seats_available;
 	
 	private int no_of_seats_alloted;
 	
+	private int min_marks;
+	
+	private int max_marks;
+	
+	public int getMin_marks() {
+		return min_marks;
+	}
+
+	public void setMin_marks(int min_marks) {
+		this.min_marks = min_marks;
+	}
+
+	public int getMax_marks() {
+		return max_marks;
+	}
+
+	public void setMax_marks(int max_marks) {
+		this.max_marks = max_marks;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -48,6 +70,14 @@ public class Courses {
 
 	public void setNo_of_seats_alloted(int no_of_seats_alloted) {
 		this.no_of_seats_alloted = no_of_seats_alloted;
+	}
+
+	public int getTotal_seats() {
+		return total_seats;
+	}
+
+	public void setTotal_seats(int total_seats) {
+		this.total_seats = total_seats;
 	}
 
 
