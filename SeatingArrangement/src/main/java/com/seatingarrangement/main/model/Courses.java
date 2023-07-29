@@ -14,6 +14,7 @@ public class Courses {
 	
     private String course;
     
+    
     private int total_seats;
 	
 	private int no_of_seats_available;

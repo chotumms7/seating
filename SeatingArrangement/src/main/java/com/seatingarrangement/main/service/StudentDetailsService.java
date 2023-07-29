@@ -18,28 +18,68 @@ public class StudentDetailsService {
 	
 	@Autowired
 	private CoursesService courseService;
-	
+//	
 	private Courses course;
 	
 
 	
-	 public StudentDetails insert(StudentDetails studentDetails) {
-	        if (studentDetails != null) {
-	            int marks = studentDetails.getMarks();
-	            String branch = null;
+//	 public StudentDetails insert(StudentDetails studentDetails) {
+//	        if (studentDetails != null) {
+//	            int marks = studentDetails.getMarks();
+//	            String branch = null;
+//
+//	            if (marks > 950 && marks <= 1000) {
+//	                branch = "CSE";
+//	            } else if (marks > 900 && marks <= 950) {
+//	                branch = "ECE";
+//	            } else if (marks > 850 && marks <= 900) {
+//	                branch = "MECH";
+//	            } else if (marks > 800 && marks <= 850) {
+//	                branch = "CIVIL";
+//	            }
+//
+//	            if (branch != null ) {
+//	                Courses course = courseService.getByCourse(branch);
+//
+//	                // Check if there are available seats in the branch
+//	                if (course.getNo_of_seats_available() > 0) {
+//	                    course.setNo_of_seats_alloted(course.getNo_of_seats_alloted() + 1);
+//	                    course.setNo_of_seats_available(course.getNo_of_seats_available() - 1);
+//
+//	                    // Save the updated course details with the new seat allocation
+//	                    courseService.saveCourse(course);
+//
+//                  studentDetails.setBranch(branch);
+//	                    
+//	                    return studentDetailsRepository.save(studentDetails);
+//	                } 
+//	 else {
+//	                    // Branch is full, handle accordingly (throw an exception, return null, etc.)
+//                    throw new IllegalStateException("Branch is full. Cannot add more students.");
+//                }
+//	            } else {
+//	                // Student's marks do not fall in any valid range, handle accordingly (throw an exception, return null, etc.)
+//	                throw new IllegalArgumentException("Invalid marks. Cannot allocate seat.");
+//	            }
+//	        }
+//	        return null;
+//	    }
+	
+	public StudentDetails insert(StudentDetails studentDetails) {
+	    if (studentDetails != null) {
+	        int marks = studentDetails.getMarks();
+	        String branch = null;
+	        
+	        // Fetch all courses from the backend
+	        List<Courses> coursesList = courseService.getAll();
 
-	            if (marks > 950 && marks <= 1000) {
-	                branch = "CSE";
-	            } else if (marks > 900 && marks <= 950) {
-	                branch = "ECE";
-	            } else if (marks > 900 && marks <= 850) {
-	                branch = "MECH";
-	            } else if (marks > 850 && marks <= 800) {
-	                branch = "CIVIL";
-	            }
+	        // Find the course that matches the student's marks
+	        for (Courses course : coursesList) {
+	            int minMarks = course.getMin_marks();
+	            int maxMarks = course.getMax_marks();
 
-	            if (branch != null ) {
-	                Courses course = courseService.getByCourse(branch);
+	            if (marks >= minMarks && marks <= maxMarks) {
+	                branch = course.getCourse();
 
 	                // Check if there are available seats in the branch
 	                if (course.getNo_of_seats_available() > 0) {
@@ -55,13 +95,15 @@ public class StudentDetailsService {
 	                    // Branch is full, handle accordingly (throw an exception, return null, etc.)
 	                    throw new IllegalStateException("Branch is full. Cannot add more students.");
 	                }
-	            } else {
-	                // Student's marks do not fall in any valid range, handle accordingly (throw an exception, return null, etc.)
-	                throw new IllegalArgumentException("Invalid marks. Cannot allocate seat.");
 	            }
 	        }
-	        return null;
+
+	        // Student's marks do not fall in any valid range, handle accordingly (throw an exception, return null, etc.)
+	        throw new IllegalArgumentException("Invalid marks. Cannot allocate seat.");
 	    }
+	    return null;
+	}
+
 	
 	public List<StudentDetails> getAll(){
 		return studentDetailsRepository.findAll();

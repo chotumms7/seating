@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+
+
 
 @Entity
 public class StudentDetails {
@@ -19,10 +23,21 @@ public class StudentDetails {
 	private String branch;
 	
 	private int marks;
+	
+//	@ManyToOne
+//	private Courses courses;
 
 	public int getId() {
 		return id;
 	}
+
+//	public Courses getCourses() {
+//		return courses;
+//	}
+//
+//	public void setCourses(Courses courses) {
+//		this.courses = courses;
+//	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -35,10 +50,6 @@ public class StudentDetails {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-
-	
-
-	
 
 	public String getBranch() {
 		return branch;

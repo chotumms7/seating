@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.seatingarrangement.main.model.Courses;
 import com.seatingarrangement.main.model.StudentDetails;
+import com.seatingarrangement.main.service.CoursesService;
 import com.seatingarrangement.main.service.StudentDetailsService;
 
 @RestController
@@ -25,12 +26,23 @@ public class StudentDetailsController {
 	@Autowired
 	private StudentDetailsService studentDetailsService;
 	
-	private Courses course;
+	@Autowired
+	private CoursesService coursesService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> postStudentDetails(@RequestBody StudentDetails studentDetails) {
+    public ResponseEntity<StudentDetails> postStudentDetails(@RequestBody StudentDetails studentDetails) {
+            
+//   	  Courses courses=studentDetails.getCourses();
+// 	  
+//   	  courses=coursesService.insert(courses);
+//   	  
+//   	  studentDetails.setCourses(courses);
+//   	  
+//   	  return studentDetailsService.insert(studentDetails);
+    	
+    	
         StudentDetails savedStudentDetails = studentDetailsService.insert(studentDetails);
-//        System.out.println(savedStudentDetails);
+       // System.out.println(savedStudentDetails);
         return ResponseEntity.status(HttpStatus.OK).body(savedStudentDetails);
     }
 	
