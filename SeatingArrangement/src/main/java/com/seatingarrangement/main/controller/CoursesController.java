@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.seatingarrangement.main.model.Courses;
+import com.seatingarrangement.main.model.Student;
 import com.seatingarrangement.main.service.CoursesService;
 
 @RestController
@@ -34,6 +35,18 @@ public class CoursesController {
 	public List<Courses> getAll(){
 		List<Courses> list=coursesService.getAll();
 		return list;
+	}
+	
+
+	@GetMapping("/getOne/{id}")
+	public ResponseEntity<?> getOne(@PathVariable("id") int id){
+		Courses courses=coursesService.getById(id);
+		if(courses==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("INVALID ID given");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(courses);
+		
 	}
 	
 	@PutMapping("/update/{id}")
@@ -59,5 +72,15 @@ public class CoursesController {
 			coursesService.deleteCourses(courses);
 			return ResponseEntity.status(HttpStatus.OK).body("course deleted");
 		}
+	 
+	 @GetMapping("/getByCourseName/{courseName}")
+	    public ResponseEntity<?> getCoursesByCourseName(@PathVariable("courseName") String courseName) {
+	        List<Courses> courses = coursesService.getByCourseName(courseName);
+	        if (courses.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                    .body("No courses found with the given course name: " + courseName);
+	        }
+	        return ResponseEntity.status(HttpStatus.OK).body(courses);
+	    }
 
 }

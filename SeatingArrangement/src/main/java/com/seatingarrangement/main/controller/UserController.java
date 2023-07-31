@@ -21,7 +21,7 @@ import com.seatingarrangement.main.service.UserService;
 
 
 @RestController
-@RequestMapping("api/userdetails")
+@RequestMapping("/userdetails")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -31,9 +31,7 @@ public class UserController {
 	
 	@PostMapping("/add")
 	public User postUserDetails(@RequestBody User user) {
-//		System.out.println("mypassword" +bCryptPasswordEncoder.encode("test@1234"));
 		user.setUsername(user.getUsername());
-		//user.setRole("ADMIN");
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		return userService.insert(user);
 	}
@@ -44,6 +42,17 @@ public class UserController {
 	public List<User> getAll(){
 		List<User> list=userService.getAll();
 		return list;
+	}
+	
+	@GetMapping("/getOne/{id}")
+	public ResponseEntity<?> getOne(@PathVariable("id") int id){
+		User user=userService.getById(id);
+		if(user==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("INVALID ID given");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+		
 	}
 	
 	@PutMapping("/update/{id}")
@@ -69,12 +78,7 @@ public class UserController {
 			userService.deleteUserDetails(userDetails);
 			return ResponseEntity.status(HttpStatus.OK).body("userDetails deleted");
 		}
-	 
-//	 @PostMapping(path="/login")
-//		 public ResponseEntity<?> loginUser(@RequestBody User user){
-//			 UserRes userRes=userService.loginUser(user);
-//			 return ResponseEntity.ok(userRes);
-//		 }
+
 	 @GetMapping(path="login/{username}/{password}")
 	 public Boolean loginUser(@PathVariable("username") String username, @PathVariable("password") String password){
 		 User user = userService.findByusername(username);

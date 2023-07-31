@@ -1,5 +1,6 @@
 package com.seatingarrangement.main.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,4 +48,10 @@ public class CoursesService {
 	public Courses saveCourse(Courses courses) {
 		return coursesRepository.save(courses);
 	}
+	
+	 public List<Courses> getByCourseName(String courseName) {
+		 List<Courses> courses=new ArrayList<>();
+	       courses.add(coursesRepository.getByCourse(courseName));
+	       return courses;
+	    }
 }

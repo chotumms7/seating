@@ -69,6 +69,13 @@ public class Courses {
 		return no_of_seats_alloted;
 	}
 
+	@Override
+	public String toString() {
+		return "Courses [id=" + id + ", course=" + course + ", total_seats=" + total_seats + ", no_of_seats_available="
+				+ no_of_seats_available + ", no_of_seats_alloted=" + no_of_seats_alloted + ", min_marks=" + min_marks
+				+ ", max_marks=" + max_marks + "]";
+	}
+
 	public void setNo_of_seats_alloted(int no_of_seats_alloted) {
 		this.no_of_seats_alloted = no_of_seats_alloted;
 	}

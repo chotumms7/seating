@@ -19,16 +19,6 @@ public class UserService<ApiResponse> implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	
-
-//    @Autowired
-//    public UserDetailsService(UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder) {
-//        this.userDetailsRepository = userDetailsRepository;
-//        this.passwordEncoder = passwordEncoder;
-//    }
-//	
-	
-	
 	public User insert(User user) {
 		return userRepository.save(user);
 	}
@@ -54,8 +44,6 @@ public class UserService<ApiResponse> implements UserDetailsService {
 		User user = userRepository.getUserByUsername(username);
 		return user;
 	}
-
-//	UserRes loginUser(LoginDTO loginDTO);
 
 	public User findByusername(String username) {
 		return userRepository.getUserByUsername(username);

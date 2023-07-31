@@ -31,13 +31,6 @@ public class StudentDetails {
 		return id;
 	}
 
-//	public Courses getCourses() {
-//		return courses;
-//	}
-//
-//	public void setCourses(Courses courses) {
-//		this.courses = courses;
-//	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -65,6 +58,12 @@ public class StudentDetails {
 
 	public void setMarks(int marks) {
 		this.marks = marks;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentDetails [id=" + id + ", studentName=" + studentName + ", emailId=" + emailId + ", branch="
+				+ branch + ", marks=" + marks + "]";
 	}
 
 	public String getEmailId() {

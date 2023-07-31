@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.seatingarrangement.main.model.Courses;
 import com.seatingarrangement.main.model.StudentDetails;
+import com.seatingarrangement.main.model.User;
 import com.seatingarrangement.main.service.CoursesService;
 import com.seatingarrangement.main.service.StudentDetailsService;
 
@@ -31,18 +32,9 @@ public class StudentDetailsController {
 
     @PostMapping("/add")
     public ResponseEntity<StudentDetails> postStudentDetails(@RequestBody StudentDetails studentDetails) {
-            
-//   	  Courses courses=studentDetails.getCourses();
-// 	  
-//   	  courses=coursesService.insert(courses);
-//   	  
-//   	  studentDetails.setCourses(courses);
-//   	  
-//   	  return studentDetailsService.insert(studentDetails);
-    	
-    	
+              	
         StudentDetails savedStudentDetails = studentDetailsService.insert(studentDetails);
-       // System.out.println(savedStudentDetails);
+      
         return ResponseEntity.status(HttpStatus.OK).body(savedStudentDetails);
     }
 	
@@ -50,6 +42,18 @@ public class StudentDetailsController {
 	public List<StudentDetails> getAll(){
 		List<StudentDetails> list=studentDetailsService.getAll();
 		return list;
+	}
+	
+	
+	@GetMapping("/getOne/{id}")
+	public ResponseEntity<?> getOne(@PathVariable("id") int id){
+		StudentDetails studentDetails=studentDetailsService.getById(id);
+		if(studentDetails==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("INVALID ID given");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(studentDetails);
+		
 	}
 	
 	@PutMapping("/update/{id}")

@@ -44,9 +44,7 @@ public class StudentService {
 		return studentRepository.getStudentByUsername(username);
 	}
 
-//	public Student findByusername(String username) {
-//		return studentRepository.getStudentByUsername(username);
-//	}
+
 	
 
 }

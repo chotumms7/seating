@@ -29,12 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // here I am going to build my own AuthManager that will read user details from the DB
-        
-//         auth.inMemoryAuthentication()
-//         .withUser("msdhoni@incedo.com").password(getEncoder().encode("csk")).authorities("ADMIN");
-        
-         //point spring auth to DB 
+  
          auth.authenticationProvider(getProvider());
     }
 

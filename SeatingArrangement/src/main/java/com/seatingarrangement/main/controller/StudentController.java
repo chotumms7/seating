@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seatingarrangement.main.model.Student;
+import com.seatingarrangement.main.model.StudentDetails;
 import com.seatingarrangement.main.model.User;
 //import com.seatingarrangement.main.model.User;
 import com.seatingarrangement.main.service.StudentService;
@@ -30,32 +31,9 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
-//	@Autowired
-//	private UserService userService;
-	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//	@PostMapping("/add")
-//	public Student postStudent(@RequestBody Student student) {
-//		/*Read user info given as input and attach it to user object.  */
-//		User user = student.getUser();
-////		System.out.println("In here :" + user);
-//		user.setRole("STUDENT");
-//		
-//		/* Encode the password before saving in DB */
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//		
-//		/* Save user in DB and fetch saved object */
-//		user = userService.insert(user);
-//		
-//		/* attach user to Student */
-//		student.setUser(user);
-//		
-//		/* Save Student in DB */
-//		return studentService.insert(student);
-//	}
-	
 	@PostMapping("/add")
 	public Student postStudent(@RequestBody Student student) {
 		
@@ -68,6 +46,18 @@ public class StudentController {
 	public List<Student> getAll(){
 		List<Student> list=studentService.getAll();
 		return list;
+	}
+	
+
+	@GetMapping("/getOne/{id}")
+	public ResponseEntity<?> getOne(@PathVariable("id") int id){
+		Student student=studentService.getById(id);
+		if(student==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("INVALID ID given");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(student);
+		
 	}
 	
 	@PutMapping("/update/{id}")
@@ -94,20 +84,7 @@ public class StudentController {
 			return ResponseEntity.status(HttpStatus.OK).body("student deleted");
 		}
 	
-//	 @GetMapping(path="login/{username}/{password}")
-//	 public Boolean loginUser(@PathVariable("username") String username, @PathVariable("password") String password){
-//		 Student student = studentService.findByusername(username);
-//		
-//		 if(student == null) {
-//			 return  false;
-//		 }
-//		 
-//		 if(bCryptPasswordEncoder.matches(password, ((UserDetails) student).getPassword())){
-//			 return true;
-//		 }
-//		 return false;
-//	 }
-//	
+
 	 @GetMapping(path="login/{username}/{password}")
 	 public Boolean loginStudent(@PathVariable("username") String username, @PathVariable("password") String password){
 		 Student student = studentService.findByusername(username);
