@@ -26,10 +26,10 @@ public class StudentDetailsService {
 	        int marks = studentDetails.getMarks();
 	        String branch = null;
 	        
-	        // Fetch all courses from the backend
+	        
 	        List<Courses> coursesList = courseService.getAll();
 
-	        // Find the course that matches the student's marks
+	        
 	        for (Courses course : coursesList) {
 	            int minMarks = course.getMin_marks();
 	            int maxMarks = course.getMax_marks();
@@ -43,7 +43,7 @@ public class StudentDetailsService {
 	            }
 	        }
 
-	        // Student's marks do not fall in any valid range, handle accordingly (throw an exception, return null, etc.)
+	      
 	        throw new IllegalArgumentException("Invalid marks. Cannot allocate seat.");
 	    }
 	    return null;

@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private AuthenticationProvider getProvider() {
 		DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
 		dao.setPasswordEncoder(getEncoder());
-		//to point to DB, go to service first. 
+		
 		dao.setUserDetailsService(userService);
 		return dao;
 	}
@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-        // here, I am going to list out my api's along with User permissions
+      
          http.authorizeRequests()
          .antMatchers(HttpMethod.POST,"/userdetails/add").hasAuthority("SUPERADMIN")
         

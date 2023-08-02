@@ -21,7 +21,7 @@ import com.seatingarrangement.main.model.StudentDetails;
 import com.seatingarrangement.main.model.User;
 //import com.seatingarrangement.main.model.User;
 import com.seatingarrangement.main.service.StudentService;
-//import com.seatingarrangement.main.service.UserService;
+
 
 @RestController
 @RequestMapping("/student")
